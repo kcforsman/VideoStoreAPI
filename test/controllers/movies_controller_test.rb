@@ -1,10 +1,17 @@
 require "test_helper"
 
 describe MoviesController do
-  it "should get index" do
-    get movies_index_url
-    value(response).must_be :success?
+  describe "index" do
+    it "is a real working route to index" do
+      get movies_url
+      must_respond_with :success
+    end
+    it "returns json" do
+      get movies_url
+      response.header['Content-Type'].must_include 'json'
+    end
   end
+
 
   it "should get show" do
     get movies_show_url

@@ -6,4 +6,6 @@ describe CustomersController do
     value(response).must_be :success?
   end
 
+  
+
 end
