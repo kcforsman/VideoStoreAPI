@@ -38,11 +38,8 @@ describe CustomersController do
       get customers_url
 
       body = JSON.parse(response.body)
-      body.must_be_kind_of Array
-      body.length.must_equal 0
+      body.must_be :empty?
     end
   end
-
-  
 
 end
