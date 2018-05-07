@@ -1,19 +1,37 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  registered_at: 2018-05-07 13:50:27
-  address: MyString
-  city: MyString
-  state: MyString
-  postal_code: MyString
-  phone: MyString
+shell:
+  name: Shelley Rocha
+  registered_at: <%= DateTime.new(2016,12,07,07,54,27) %>
+  address: Ap 292-5216 Ipsum Rd.
+  city: Hillsboro
+  state: OR
+  postal_code: 24309
+  phone: (322) 510-8695
 
-two:
-  name: MyString
-  registered_at: 2018-05-07 13:50:27
-  address: MyString
-  city: MyString
-  state: MyString
-  postal_code: MyString
-  phone: MyString
+curr:
+  name: Curran Stout
+  registered_at: <%= DateTime.new(2017,02,07,21,50,13) %>
+  address: Ap 658-1540 Erat Rd.
+  city: San Francisco
+  state: CA
+  postal_code: 94267
+  phone: (908) 949-6758
+
+roa:
+  name: Roanna Robinson
+  registered_at: <%= DateTime.new(2014,011,28,13,14,07) %>
+  address: Ap 561-4214 Eget St.
+  city: Harrisburg
+  state: PA
+  postal_code: 15867
+  phone: (323) 336-1841
+
+lyn:
+  name: Carolyn Chandler
+  registered_at: <%= DateTime.new(2014,07,04,11,50,20) %>
+  address: 133-8707 Arcu. Avenue
+  city: Fort Wayne
+  state: IN
+  postal_code: 73684
+  phone: (234) 837-2886
