@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  
+
   def index
     movies = Movie.all
 
@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
   end
 
   def create
-    movie = Movie.create(movies_params)
+    movie = Movie.create(title: params["title"], release_date: params["release_date"], inventory: params["inventory"], overview: params["overview"] )
 
     if movie.valid?
       render json: {id: movie.id}, status: :ok
@@ -29,5 +29,6 @@ end
 private
 
 def movies_params
-  return params.require(:movie).permit(:title, :release_date, :inventory)
+  # tests expect that params should not be nested inside movie
+  return params.require(:title, :release_date, :inventory, :overview)
 end
