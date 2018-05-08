@@ -21,7 +21,13 @@ describe RentalsController do
       id = movie.id
       movie.destroy
       post check_out_url, params: { customer_id: customer.id, movie_id: id }
+
       value(response).must_be :not_found?
+      body = JSON.parse(response.body)
+      body.must_include "ok"
+      body["ok"].must_equal false
+      body.must_include "errors"
+      body["errors"].must_equal "Invalid movie or customer"
     end
   end
   it "should get check-in" do
