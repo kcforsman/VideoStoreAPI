@@ -76,9 +76,56 @@ describe MoviesController do
     end
   end
 
-  it "should get create" do
-    get movies_create_url
-    value(response).must_be :success?
-  end
+  describe "create" do
+    let(:movie_data) {
+      {
+        title: "The Princess Bride",
+        release_date: Date.new(2010,11,05),
+        inventory: 5,
+        available_inventory: 3
+      }
+    }
 
+    it "should get create" do
+      get movies_path
+      value(response).must_be :success?
+    end
+
+    it "Creates a new movie" do
+
+      proc {
+        post movies_path, params: {movie: movie_data}
+      }.must_change 'Movie.count', 1
+
+      must_respond_with :success
+
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Hash
+      body.must_include "id"
+
+      # Check that the ID matches
+      Movie.find(body["id"]).title.must_equal movie_data[:title]
+    end
+
+    it "returns a bad_request for bad params data" do
+      not_a_movie ={
+        release_date: Date.new(2010,11,05),
+        inventory: 5,
+        available_inventory: 3
+      }
+      proc {
+        post movies_path, params: {movie: not_a_movie}
+      }.wont_change 'Movie.count'
+
+      must_respond_with :bad_request
+
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Hash
+      body.must_include "ok"
+      body["ok"].must_equal false
+      body.must_include "errors"
+      body["errors"].must_include "title"
+
+    end
+  end
 end
