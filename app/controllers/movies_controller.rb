@@ -1,4 +1,6 @@
 class MoviesController < ApplicationController
+  # protect_from_forgery with: :exception
+
   def index
     movies = Movie.all
 
@@ -15,5 +17,18 @@ class MoviesController < ApplicationController
   end
 
   def create
+    movie = Movie.create(movies_params)
+
+    if movie.valid?
+      render json: {id: movie.id}, status: :ok
+    else
+      render json: {ok: false, errors: movie.errors}, status: :bad_request
+    end
   end
+end
+
+private
+
+def movies_params
+  return params.require(:movie).permit(:title, :release_date, :inventory)
 end
