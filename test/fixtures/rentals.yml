@@ -2,10 +2,14 @@
 
 one:
   checkout_date: 2018-05-08
-  due_date: 2018-05-08
+  due_date: 2018-05-15
   returned: false
+  customer: curr
+  movie: savior
 
 two:
   checkout_date: 2018-05-08
-  due_date: 2018-05-08
-  returned: false
+  due_date: 2018-05-15
+  returned: true
+  customer: curr
+  movie: blacksmith
