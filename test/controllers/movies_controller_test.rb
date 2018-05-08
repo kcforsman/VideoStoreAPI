@@ -54,7 +54,7 @@ describe MoviesController do
 
     it "returns movie with exactly the required fields" do
       # must be listed in alphabetical order
-      keys = %w(inventory overview release_date title)
+      keys = %w(available_inventory inventory overview release_date title)
       get movie_url(movie.id)
       movie = JSON.parse(response.body)
       movie.keys.sort.must_equal keys
