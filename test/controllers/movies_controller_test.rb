@@ -77,14 +77,6 @@ describe MoviesController do
   end
 
   describe "create" do
-    let(:movie_data) {
-      {
-        title: "The Princess Bride",
-        release_date: Date.new(2010,11,05),
-        inventory: 5,
-        available_inventory: 3
-      }
-    }
 
     it "should get create" do
       get movies_path
@@ -94,7 +86,12 @@ describe MoviesController do
     it "Creates a new movie" do
 
       proc {
-        post movies_path, params: {movie: movie_data}
+        post movies_path, params: {
+          title: "The Princess Bride",
+          release_date: Date.new(2010,11,05),
+          inventory: 5,
+          available_inventory: 3
+        }
       }.must_change 'Movie.count', 1
 
       must_respond_with :success
@@ -104,7 +101,7 @@ describe MoviesController do
       body.must_include "id"
 
       # Check that the ID matches
-      Movie.find(body["id"]).title.must_equal movie_data[:title]
+      Movie.find(body["id"]).title.must_equal "The Princess Bride"
     end
 
     it "returns a bad_request for bad params data" do
