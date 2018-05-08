@@ -1,6 +1,5 @@
 class MoviesController < ApplicationController
-  # protect_from_forgery with: :exception
-
+  
   def index
     movies = Movie.all
 
