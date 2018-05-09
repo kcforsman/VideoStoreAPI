@@ -32,4 +32,7 @@ class RentalsController < ApplicationController
       render json: { ok: false, errors: "Invalid movie or customer"}, status: 404
     end
   end
+
+  def overdue
+  end
 end
