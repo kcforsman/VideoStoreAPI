@@ -26,4 +26,32 @@ describe Movie do
     movie.inventory = nil
     value(movie).wont_be :valid?
   end
+
+  describe 'relations' do
+    it "should have many rentals" do
+      movie = movies(:blacksmith)
+
+      movie.must_respond_to :rentals
+      movie.rentals.count.must_equal 2
+      movie.rentals.first.must_be_instance_of Rental
+    end
+
+    it "responds to movies with no rentals" do
+      movie = movies(:women)
+
+      movie.rentals.count.must_equal 0
+    end
+
+    it "can get assigned new rentals" do
+        movie = movies(:blacksmith)
+        customer = customers(:shell)
+      Rental.create({
+        movie_id: movie.id,
+        customer_id: customer.id
+        })
+
+        movie.rentals.count.must_equal 3
+      end
+  end
+
 end
