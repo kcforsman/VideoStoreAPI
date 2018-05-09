@@ -20,3 +20,10 @@ three:
   returned: true
   customer: shell
   movie: blacksmith
+
+four:
+  checkout_date: 2017-05-08
+  due_date: 2017-05-15
+  returned: false
+  customer: shell
+  movie: savior

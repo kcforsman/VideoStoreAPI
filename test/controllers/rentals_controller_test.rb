@@ -101,6 +101,17 @@ describe RentalsController do
       body = JSON.parse(response.body)
       body.must_be_kind_of Array
       must_respond_with :success
+      body.length.must_equal 1
+    end
+
+    it "returns movies with exactly the required fields" do
+      # must be listed in alphabetical order
+      keys = %w(checkout_date customer_id due_date movie_id name postal_code title)
+      get movies_url
+      body = JSON.parse(response.body)
+      body.each do |rental|
+        rental.keys.sort.must_equal keys
+      end
     end
   end
 end

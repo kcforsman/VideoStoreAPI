@@ -7,7 +7,7 @@ class RentalsController < ApplicationController
     if customer && movie
       rental = Rental.new(customer: customer, movie: movie, checkout_date: Date.today, due_date: Date.today + 7.days)
       if rental.save
-        render json: { status: 200}
+        render json: { status: 200 }
       # else
       #   render json: { ok: false, errors: rental.errors}, status: :bad_request
       end
@@ -34,5 +34,12 @@ class RentalsController < ApplicationController
   end
 
   def overdue
+    overdue_rentals = []
+    Rental.where(returned: false).each do |rental|
+      overdue_rentals << rental if rental.due_date < Date.today
+    end
+
+    render json: overdue_rentals
+
   end
 end
