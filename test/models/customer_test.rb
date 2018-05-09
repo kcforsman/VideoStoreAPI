@@ -48,4 +48,27 @@ describe Customer do
     value(customer).wont_be :valid?
   end
 
+  describe "relations" do
+    describe "rentals" do
+      it "can have rentals" do
+        customer = customers(:curr)
+        customer.rentals.length.must_equal 2
+      end
+
+      it "can have no rentals" do
+        customer = customers(:shell)
+        customer.rentals.length.must_equal 0
+      end
+
+      it "can get a new rental" do
+        customer = customers(:shell)
+        movie = movies(:savior)
+
+        rental = Rental.create(customer_id: customer.id, movie_id: movie.id, checkout_date: Date.today, due_date: Date.today + 7.days, returned: false)
+
+        customer.rentals.length.must_equal 1
+        customer.rentals.must_include rental
+      end
+    end
+  end
 end
