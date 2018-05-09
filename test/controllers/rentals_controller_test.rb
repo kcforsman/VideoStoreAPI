@@ -14,6 +14,7 @@ describe RentalsController do
 
     it "should render status not_found for invalid customer " do
       id = customer.id
+      customer.rentals.each {|rental| rental.destroy}
       customer.destroy
       post check_out_url, params: { customer_id: id, movie_id: movie.id }
       value(response).must_be :not_found?
@@ -51,6 +52,7 @@ describe RentalsController do
 
     it "should render status not_found for invalid customer " do
       id = customer.id
+      customer.rentals.each {|rental| rental.destroy}
       customer.destroy
       post check_in_url, params: { customer_id: id, movie_id: movie2.id }
       value(response).must_be :not_found?
@@ -92,4 +94,13 @@ describe RentalsController do
     end
   end
 
+  describe "Overdue" do
+    it "can generate list of overdue rentals " do
+      get overdue_url
+
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Array
+      must_respond_with :success
+    end
+  end
 end
