@@ -16,9 +16,9 @@ class MoviesController < ApplicationController
   end
 
   def create
-    movie = Movie.create(title: params["title"], release_date: params["release_date"], inventory: params["inventory"], overview: params["overview"] )
-
-    if movie.valid?
+    movie = Movie.new(movies_params)
+    movie.available_inventory = params["inventory"]
+    if movie.save
       render json: {id: movie.id}, status: :ok
     else
       render json: {ok: false, errors: movie.errors}, status: :bad_request
@@ -30,5 +30,5 @@ private
 
 def movies_params
   # tests expect that params should not be nested inside movie
-  return params.require(:title, :release_date, :inventory, :overview)
+  return params.permit(:title, :release_date, :inventory, :overview)
 end
