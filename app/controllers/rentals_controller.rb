@@ -6,10 +6,12 @@ class RentalsController < ApplicationController
 
     if customer && movie
       rental = Rental.new(customer: customer, movie: movie, checkout_date: Date.today, due_date: Date.today + 7.days)
-      if rental.save
+      customer.movies_checked_out_count += 1
+      movie.available_inventory -= 1
+      if rental.save && movie.save && customer.save
         render json: { status: 200}
-      # else
-      #   render json: { ok: false, errors: rental.errors}, status: :bad_request
+      else
+        render json: { ok: false, errors: rental.errors}, status: :bad_request
       end
     else
       render json: { ok: false, errors: "Invalid movie or customer"}, status: 404
@@ -23,8 +25,13 @@ class RentalsController < ApplicationController
       rental = Rental.find_by(customer: customer, movie: movie, returned: false)
       if rental
         rental.returned = true
-        rental.save
-        render json: { status: 200}
+        customer.movies_checked_out_count -= 1
+        movie.available_inventory += 1
+        if rental.save && movie.save && customer.save
+          render json: { status: 200}
+        else
+          render json: { ok: false, errors: "Something went wrong."}, status: :bad_request
+        end
       else
         render json: { ok: false, errors: "Invalid rental"}, status: 404
       end
