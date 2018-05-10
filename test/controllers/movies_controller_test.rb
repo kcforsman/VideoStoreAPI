@@ -30,7 +30,10 @@ describe MoviesController do
     end
 
     it "returns [] when there are no movies" do
-      Movie.delete_all
+      Movie.all.each do |movie|
+        movie.rentals.each { |rental| rental.destroy }
+        movie.destroy
+      end
 
       get movies_url
 
@@ -62,6 +65,7 @@ describe MoviesController do
 
     it "returns not_found for invalid id and returns error in body" do
       id = movie.id
+      movie.rentals.each {|rental| rental.destroy}
       movie.destroy
 
       get movie_url(id)
