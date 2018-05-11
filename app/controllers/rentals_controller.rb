@@ -5,13 +5,17 @@ class RentalsController < ApplicationController
     movie = Movie.find_by(id: params[:movie_id])
 
     if customer && movie
-      rental = Rental.new(customer: customer, movie: movie, checkout_date: Date.today, due_date: Date.today + 7.days)
-      customer.movies_checked_out_count += 1
-      movie.available_inventory -= 1
-      if rental.save && movie.save && customer.save
-        render json: { status: 200}
+      if movie.available_inventory > 0
+        rental = Rental.new(customer: customer, movie: movie, checkout_date: Date.today, due_date: Date.today + 7.days)
+        customer.movies_checked_out_count += 1
+        movie.available_inventory -= 1
+        if rental.save && movie.save && customer.save
+          render json: { status: 200}
+        else
+          render json: { ok: false, errors: rental.errors}, status: :bad_request
+        end
       else
-        render json: { ok: false, errors: rental.errors}, status: :bad_request
+        render json: { ok: false, errors: "Sorry, not enough inventory"}, status: 404
       end
     else
       render json: { ok: false, errors: "Invalid movie or customer"}, status: 404
