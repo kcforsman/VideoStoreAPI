@@ -144,5 +144,18 @@ describe RentalsController do
         rental.keys.sort.must_equal keys
       end
     end
+
+    it "should return an empty array if there are no overdue rentals" do
+      rentals(:four).destroy
+
+      get overdue_url
+
+      value(response).must_be :not_found?
+      body = JSON.parse(response.body)
+      body.must_include "overdue"
+      body["overdue"].must_equal false
+      body.must_include "errors"
+      body["errors"].must_equal "No overdue rentals at this time"
+    end
   end
 end

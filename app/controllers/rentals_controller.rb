@@ -49,8 +49,22 @@ class RentalsController < ApplicationController
     Rental.where(returned: false).each do |rental|
       overdue_rentals << rental if rental.due_date < Date.today
     end
-
-    render json: overdue_rentals
-
+     overdue_attributes = []
+    if overdue_rentals.empty?
+      render json: { overdue: false, errors: "No overdue rentals at this time"}, status: :not_found
+    else
+      overdue_rentals.each do |overdue_rental|
+        overdue_attributes << {
+          checkout_date: overdue_rental.checkout_date,
+          due_date: overdue_rental.due_date,
+          customer_id: overdue_rental.customer_id,
+          name: overdue_rental.customer.name,
+          postal_code: overdue_rental.customer.postal_code,
+          movie_id: overdue_rental.movie_id,
+          title: overdue_rental.movie.title
+        }
+      end
+      render json: overdue_attributes
+    end
   end
 end
