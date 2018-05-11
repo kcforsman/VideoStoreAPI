@@ -33,7 +33,7 @@ describe RentalsController do
       body["errors"].must_equal "Invalid movie or customer"
     end
 
-    it "should decrease decrease the available_inventory and increase the movies_checked_out_count by 1" do
+    it "should decrease the available_inventory and increase the movies_checked_out_count by 1" do
       post check_out_url, params: { customer_id: customer.id, movie_id: movie.id }
 
       updated_cust = Customer.find_by(id: customer.id)
@@ -68,6 +68,16 @@ describe RentalsController do
 
       rental = Rental.find_by(id: rental.id)
       rental.returned.must_equal true
+    end
+
+    it "should increase the available_inventory and decrease the movies_checked_out_count by 1" do
+      post check_in_url, params: { customer_id: customer2.id, movie_id: movie2.id }
+
+      updated_cust = Customer.find_by(id: customer2.id)
+      updated_cust.movies_checked_out_count.must_equal 0
+
+      updated_movie = Movie.find_by(id: movie2.id)
+      updated_movie.available_inventory.must_equal 1
     end
 
     it "should render status not_found for invalid customer " do
