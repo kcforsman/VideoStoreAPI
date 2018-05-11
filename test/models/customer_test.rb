@@ -57,7 +57,7 @@ describe Customer do
 
       it "can have no rentals" do
         customer = customers(:shell)
-        customer.rentals.length.must_equal 0
+        customer.rentals.length.must_equal 1
       end
 
       it "can get a new rental" do
@@ -66,7 +66,7 @@ describe Customer do
 
         rental = Rental.create(customer_id: customer.id, movie_id: movie.id, checkout_date: Date.today, due_date: Date.today + 7.days, returned: false)
 
-        customer.rentals.length.must_equal 1
+        customer.rentals.length.must_equal 2
         customer.rentals.must_include rental
       end
     end

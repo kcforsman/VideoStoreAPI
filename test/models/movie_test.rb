@@ -50,7 +50,7 @@ describe Movie do
         customer_id: customer.id
         })
 
-        movie.rentals.count.must_equal 3
+        movie.rentals.count.must_equal 2
       end
   end
 
