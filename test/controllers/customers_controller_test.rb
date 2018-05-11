@@ -33,7 +33,10 @@ describe CustomersController do
     end
 
     it "returns an empty Array if there are no customers" do
-      Customer.all.each {|customer| customer.destroy}
+      Customer.all.each do |customer|
+        customer.rentals.each {|rental| rental.destroy}
+        customer.destroy
+      end
 
       get customers_url
 

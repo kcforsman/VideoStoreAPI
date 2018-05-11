@@ -5,21 +5,25 @@ blacksmith:
   overview: The unexciting life of a boy will be permanently altered as a strange woman enters his life.
   release_date: <%= Date.new(1979,01,18)%>
   inventory: 10
+  available_inventory: 8
 
 savior:
   title: Savior Of The Curse
   overview:
   release_date: <%= Date.new(2010,11,05)%>
   inventory: 1
+  available_inventory: 0
 
 women:
   title: Women Of Destruction
   overview: But what if this strange woman is a con artist. Or what if everything told is completely true. How could an ordinary boy be relied upon in something this big. Time will tell.
   release_date: <%= Date.new(1992,03,18)%>
   inventory: 4
+  available_inventory: 4
 
 robots:
   title: Robots Of Eternity
   overview: The laid-back life of a woman is going in a different direction as a childhood friend enters her life.
   release_date: <%= Date.new(2007,10,15)%>
   inventory: 20
+  available_inventory: 20
