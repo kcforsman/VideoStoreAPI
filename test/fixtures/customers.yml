@@ -8,6 +8,7 @@ shell:
   state: OR
   postal_code: 24309
   phone: (322) 510-8695
+  movies_checked_out_count: 1
 
 curr:
   name: Curran Stout
@@ -17,6 +18,7 @@ curr:
   state: CA
   postal_code: 94267
   phone: (908) 949-6758
+  movies_checked_out_count: 2
 
 roa:
   name: Roanna Robinson
@@ -26,6 +28,7 @@ roa:
   state: PA
   postal_code: 15867
   phone: (323) 336-1841
+  movies_checked_out_count: 0
 
 lyn:
   name: Carolyn Chandler
@@ -35,3 +38,4 @@ lyn:
   state: IN
   postal_code: 73684
   phone: (234) 837-2886
+  movies_checked_out_count: 0
